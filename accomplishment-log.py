@@ -6,8 +6,8 @@ from datetime import datetime
 # Log File
 LOG_FILE = "logs.json"
 
-def load_achievements():
-    """Load achievements from logs.json."""
+def load_accomplishments():
+    """Load accomplishments from logs.json."""
     if not os.path.exists(LOG_FILE):
         return []
     try:
@@ -16,34 +16,34 @@ def load_achievements():
     except json.JSONDecodeError:
         return []
 
-def save_achievements(achievements):
-    """Save achievements to log.json."""
+def save_accomplishment(accomplishments):
+    """Save accomplishments to log.json."""
     with open(LOG_FILE, 'w') as file:
-        json.dump(achievements, file, indent=4)
+        json.dump(accomplishments, file, indent=4)
 
-def add_achievement(title, note):
-    """Add a new achievement with title, note, and timestamp."""
-    achievements = load_achievements()
-    achievement_id = max([a['id'] for a in achievements], default=0) + 1
+def add_accomplishment(title, note):
+    """Add a new accomplishment with title, note, and timestamp."""
+    accomplishments = load_accomplishments()
+    accomplishment_id = max([a['id'] for a in accomplishments], default=0) + 1
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:$S")
-    new_achievement = {
-            "id": achievement_id,
+    new_accomplishment = {
+            "id": accomplishment_id,
             "title": title,
             "note": note,
             "timestamp": timestamp
     }
-    achievements.append(new_achievement)
-    save_achievements(achievements)
-    print(f"Achievement '{title} added successfully!")
+    accomplishments.append(new_accomplishment)
+    save_accomplishment(accomplishments)
+    print(f"Accomplishment '{title} added successfully!")
 
-def show_achievements():
-    """Show all achievements"""
-    achievements = load_achievements()
-    if not achievements:
+def show_accomplishments():
+    """Show all accomplishments."""
+    accomplishments = load_accomplishments()
+    if not accomplishments:
         sleep(.4)
-        print("\nNo achievements found.\n")
+        print("\nNo accomplishments found.\n")
         return
-    for a in achievements:
+    for a in accomplishments:
         print(f"ID: {a['id']}, Title: {a['title']}, Timestamp: {a['timestamp']}")
         print(f"Note: {a['note']}\n")
 
@@ -52,24 +52,24 @@ def main():
     while True:
         sleep(.3)
         print("\n- Accomplishment Log -\n")
-        print("(A)dd Achievement")
+        print("(A)dd Accomplishment")
         sleep(.3)
-        print("(S)how Achievements")
+        print("(S)how Accomplishment")
         sleep(.3)
         print("(E)xit")
         sleep(.3)
         choice = input("\nEnter your choice: ")
 
         if choice == 'A' or choice == 'a':
-            title = input("Achievement Title: ")
+            title = input("Accomplishment Title: ")
             note = input("Note: ")
-            add_achievement(title, note)
+            add_accomplishment(title, note)
         elif choice == 'S' or choice == 's':
-            show_achievements()
+            show_accomplishments()
         elif choice == 'E' or choice =='e':
             print("\nHave a nice day!")
             sleep(.5)
-            print("\nRemember, you can achieve anything!\n")
+            print("\nRemember, you can accomplish anything!\n")
             break
         else:
             print("\nInvalid choice. Try again.")
